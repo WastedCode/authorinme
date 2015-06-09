@@ -17,9 +17,9 @@ ActiveRecord::Schema.define(version: 20150609182607) do
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.string   "username",   limit: 40,  null: false, index: {name: "index_accounts_on_username", unique: true, case_sensitive: false}
-    t.string   "email",      limit: 100, null: false, index: {name: "index_accounts_on_email", unique: true, case_sensitive: false}
-    t.string   "password",   null: false
+    t.string   "username",        limit: 40,  null: false, index: {name: "index_accounts_on_username", unique: true, case_sensitive: false}
+    t.string   "email",           limit: 100, null: false, index: {name: "index_accounts_on_email", unique: true, case_sensitive: false}
+    t.string   "password_digest", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
