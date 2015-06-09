@@ -4,6 +4,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'jbuilder', '~> 2.0'
 gem 'pg'
 gem 'rails', '4.2.1'
+gem 'schema_plus_pg_indexes'
 gem 'unicorn'
 
 gem 'coffee-rails', '~> 4.1.0'
