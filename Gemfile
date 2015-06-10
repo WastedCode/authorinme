@@ -6,6 +6,7 @@ gem 'pg'
 gem 'rails', '4.2.1'
 gem 'schema_plus_pg_indexes'
 gem 'unicorn'
+gem 'yajl-ruby', require: 'yajl'
 
 gem 'coffee-rails', '~> 4.1.0'
 gem 'sass-rails', '~> 5.0'

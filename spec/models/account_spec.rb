@@ -42,7 +42,7 @@ RSpec.describe Account, type: :model do
         subject.save!
         expect {
             Account.for_username(subject.username, "wrongpassword")
-        }.to raise_error(IncorrectPasswordError)
+        }.to raise_error(Errors::IncorrectPasswordError)
     end
 
     it 'rejects mismatched password' do
@@ -50,6 +50,6 @@ RSpec.describe Account, type: :model do
         subject.save!
         expect {
             Account.for_username(FactoryGirl.generate(:username), "somepassword")
-        }.to raise_error(InvalidUsernameError)
+        }.to raise_error(Errors::InvalidUsernameError)
     end
 end

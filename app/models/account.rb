@@ -9,8 +9,8 @@ class Account < ActiveRecord::Base
 
     def self.for_username(username, password)
         account = Account.where(username: username).try(:first)
-        raise InvalidUsernameError, "The username: #{username} was not found" unless account
-        raise IncorrectPasswordError, "The password for username: #{username} does not match" unless account.authenticate(password)
+        raise Errors::InvalidUsernameError, "The username: #{username} was not found" unless account
+        raise Errors::IncorrectPasswordError, "The password for username: #{username} does not match" unless account.authenticate(password)
 
         account
     end

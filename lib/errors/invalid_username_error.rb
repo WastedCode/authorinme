@@ -1,2 +1,4 @@
-class InvalidUsernameError < StandardError
+module Errors
+    class InvalidUsernameError < StandardError
+    end
 end

@@ -1,2 +1,5 @@
-class IncorrectPasswordError < StandardError
+module Errors
+    class IncorrectPasswordError < StandardError
+    end
 end
+

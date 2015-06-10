@@ -1,5 +1,7 @@
+require('./lib/errors/missing_required_param_error.rb')
+
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+    include ErrorHandler
+
+    rescue_from Errors::MissingRequiredParamError, with: :handle_missing_required_param
 end
