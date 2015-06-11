@@ -3,6 +3,43 @@ require 'rails_helper'
 RSpec.describe Api::V1::AccountController, type: :controller do
     render_views
 
+    describe 'login' do
+        let (:password) { 'password' }
+        let (:account) { FactoryGirl.create(:account, password: password, password_confirmation: password) }
+        let (:params) {{
+            format: :json,
+            username: account.username,
+            password: password
+        }}
+
+        context 'missing args' do
+            it 'rejects missing username' do
+                post :login, params.except(:username)
+                expect_response_has_error(422, "username")
+            end
+
+            it 'rejects missing password' do
+                post :login, params.except(:password)
+                expect_response_has_error(422, "password")
+            end
+        end
+
+        it 'rejects invalid username' do
+            post :login, params.merge(username: FactoryGirl.generate(:username))
+            expect_response_has_error(401, "username")
+        end
+
+        it 'rejects wrong password' do
+            post :login, params.merge(password: "blaaah")
+            expect_response_has_error(401, "password")
+        end
+
+        it 'returns the account on success' do
+            post :login, params
+            expect_response_to_have([:id], {username: account.username, email: account.email})
+        end
+    end
+
     describe 'create' do
         let (:params) {{
             format: :json,

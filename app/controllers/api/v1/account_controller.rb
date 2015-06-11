@@ -13,4 +13,15 @@ class Api::V1::AccountController < ApplicationController
             render_generic_error e.message, :unprocessable_entity
         end
     end
+
+    def login
+        username = get_required_param_strip_and_downcase(:username)
+        password = get_required_param_strip(:password)
+
+        begin
+            @account = Account.for_username(username, password)
+        rescue Errors::InvalidUsernameError, Errors::IncorrectPasswordError => e
+            render_generic_error e.message, :unauthorized
+        end
+    end
 end

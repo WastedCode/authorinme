@@ -37,19 +37,29 @@ RSpec.describe Account, type: :model do
         expect(another_account.errors).to include(:email)
     end
 
-    it 'rejects mismatched password' do
-        subject.password = subject.password_confirmation = "blahblah"
-        subject.save!
-        expect {
-            Account.for_username(subject.username, "wrongpassword")
-        }.to raise_error(Errors::IncorrectPasswordError)
-    end
+    describe '.for_username' do
+        it 'rejects mismatched password' do
+            subject.password = subject.password_confirmation = "blahblah"
+            subject.save!
+            expect {
+                Account.for_username(subject.username, "wrongpassword")
+            }.to raise_error(Errors::IncorrectPasswordError)
+        end
 
-    it 'rejects mismatched password' do
-        subject.password = subject.password_confirmation = "blahblah"
-        subject.save!
-        expect {
-            Account.for_username(FactoryGirl.generate(:username), "somepassword")
-        }.to raise_error(Errors::InvalidUsernameError)
+        it 'rejects mismatched password' do
+            subject.password = subject.password_confirmation = "blahblah"
+            subject.save!
+            expect {
+                Account.for_username(FactoryGirl.generate(:username), "somepassword")
+            }.to raise_error(Errors::InvalidUsernameError)
+        end
+
+        it 'returns the correct account' do
+            password = subject.password
+            subject.save!
+            account = Account.for_username(subject.username, password)
+            expect(account.username).to eq(subject.username)
+            expect(account.email).to eq(subject.email)
+        end
     end
 end
