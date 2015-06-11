@@ -3,6 +3,16 @@ require 'rails_helper'
 RSpec.describe Api::V1::AccountController, type: :controller do
     render_views
 
+    describe 'logout' do
+        it 'clears the cookies' do
+            account = FactoryGirl.create(:account)
+            post :login, {username: account.username, password: account.password, format: :json}
+            expect(cookies.count).to_not eq(0)
+            delete :logout
+            expect(cookies.permanent.signed['aid']).to be_nil
+        end
+    end
+
     describe 'login' do
         let (:password) { 'password' }
         let (:account) { FactoryGirl.create(:account, password: password, password_confirmation: password) }

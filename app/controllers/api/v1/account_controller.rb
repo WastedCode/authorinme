@@ -27,4 +27,9 @@ class Api::V1::AccountController < ApplicationController
             render_generic_error e.message, :unauthorized
         end
     end
+
+    def logout
+        remove_login_cookie
+        render_success
+    end
 end

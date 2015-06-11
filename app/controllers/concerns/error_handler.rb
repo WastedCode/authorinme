@@ -8,4 +8,8 @@ module ErrorHandler
     def render_generic_error(message, status)
         render json: {error_message: message}, status: status
     end
+
+    def render_success
+        render json: {success: true}, status: :ok
+    end
 end
