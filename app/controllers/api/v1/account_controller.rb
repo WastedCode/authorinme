@@ -1,5 +1,6 @@
 class Api::V1::AccountController < ApplicationController
-    include AccountHelper, ParamsHelper
+    include AccountHelper, ParamsHelper, SessionHelper
+
     def create
         data = {}
         data[:username] = get_required_param_strip_and_downcase(:username)
@@ -9,6 +10,7 @@ class Api::V1::AccountController < ApplicationController
 
         begin
             @account = create_account(data)
+            add_login_cookie(@account.id)
         rescue Errors::InvalidAccountError => e
             render_generic_error e.message, :unprocessable_entity
         end
@@ -20,6 +22,7 @@ class Api::V1::AccountController < ApplicationController
 
         begin
             @account = Account.for_username(username, password)
+            add_login_cookie(@account.id)
         rescue Errors::InvalidUsernameError, Errors::IncorrectPasswordError => e
             render_generic_error e.message, :unauthorized
         end

@@ -37,6 +37,9 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         it 'returns the account on success' do
             post :login, params
             expect_response_to_have([:id], {username: account.username, email: account.email})
+
+            account = JSON.parse(response.body)
+            expect(cookies.signed.permanent['aid']).to eq(account["id"])
         end
     end
 
@@ -107,6 +110,9 @@ RSpec.describe Api::V1::AccountController, type: :controller do
                 post :create, params
             }.to change{Account.count}.by(1)
             expect_response_to_have([:id], {username: params[:username], email: params[:email]})
+
+            account = JSON.parse(response.body)
+            expect(cookies.signed.permanent['aid']).to eq(account["id"])
         end
     end
 end
