@@ -1,1 +1,1 @@
-json.(@account, :id)
+json.partial! 'models/account', account: @account

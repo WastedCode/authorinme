@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::AccountController, type: :controller do
+    render_views
+
     describe 'create' do
         let (:params) {{
+            format: :json,
             username: FactoryGirl.generate(:username),
             email: FactoryGirl.generate(:email),
             password: "abcdef",

@@ -9,7 +9,6 @@ class Api::V1::AccountController < ApplicationController
 
         begin
             @account = create_account(data)
-            #render json: account.to_json
         rescue Errors::InvalidAccountError => e
             render_generic_error e.message, :unprocessable_entity
         end
