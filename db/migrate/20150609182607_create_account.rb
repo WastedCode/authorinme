@@ -4,7 +4,7 @@ class CreateAccount < ActiveRecord::Migration
         t.string :username, unique: true, null: false, limit: 40, index: {case_sensitive: false, unique: true}
         t.string :email, unique: true, null: false, limit: 100, index: {case_sensitive: false, unique: true}
         t.string :password_digest, null: false
-        t.timestamps
+        t.timestamps null: false
     end
   end
 end
